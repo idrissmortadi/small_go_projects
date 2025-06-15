@@ -26,8 +26,8 @@ func TestJStore_Execute_Set(t *testing.T) {
 	}
 
 	// Verify the value was actually set
-	if js.Data["test_key"] != "test_value" {
-		t.Errorf("Expected value 'test_value', got '%s'", js.Data["test_key"])
+	if js.Data["test_key"].Value != "test_value" {
+		t.Errorf("Expected value 'test_value', got '%s'", js.Data["test_key"].Value)
 	}
 }
 
@@ -47,8 +47,8 @@ func TestJStore_Execute_Delete(t *testing.T) {
 	}
 
 	// Verify the value was actually set
-	if js.Data["test_key"] != "test_value" {
-		t.Errorf("Expected value 'test_value', got '%s'", js.Data["test_key"])
+	if js.Data["test_key"].Value != "test_value" {
+		t.Errorf("Expected value 'test_value', got '%s'", js.Data["test_key"].Value)
 	}
 
 	cmd = Command{
@@ -70,7 +70,10 @@ func TestJStore_Execute_Delete(t *testing.T) {
 
 func TestJStore_Execute_Get_ExistingKey(t *testing.T) {
 	js := NewJStore()
-	js.Data["existing_key"] = "existing_value"
+	js.Data["existing_key"] = StoreItem{
+		Value:     "existing_value",
+		ExpiresAt: time.Now().Add(1 * time.Hour).Unix(),
+	}
 
 	cmd := Command{
 		Op:  "get",
@@ -192,6 +195,37 @@ func TestJStore_ConcurrentAccess(t *testing.T) {
 	}
 }
 
+func TestJStore_Execute_SetWithNegativeTTL(t *testing.T) {
+	js := NewJStore()
+	cmd := Command{
+		Op:    "set",
+		Key:   "test_key",
+		Value: "test_value",
+		TTL:   -1, // Negative TTL
+	}
+	response := js.Execute(cmd)
+	if response.Status != "error" {
+		t.Errorf("Expected status 'error', got '%s'", response.Status)
+	}
+}
+
+func TestBackgroundCleanup(t *testing.T) {
+	js := &JStore{
+		Data: make(map[string]StoreItem),
+		mu:   sync.RWMutex{},
+	}
+	js.Data["expired_key"] = StoreItem{
+		Value:     "expired_value",
+		ExpiresAt: time.Now().Add(-1 * time.Hour).Unix(), // Set to past time
+	}
+	go js.backgroundCleanup(1 * time.Second)
+	time.Sleep(1 * time.Second) // Wait for cleanup to run
+	// Verify the expired key is removed
+	if _, exists := js.Data["expired_key"]; exists {
+		t.Errorf("Expected 'expired_key' to be removed, but it still exists")
+	}
+}
+
 func TestJStore_Integration(t *testing.T) {
 	// Start server in a goroutine
 	js := NewJStore()
@@ -226,7 +260,7 @@ func TestJStore_Integration(t *testing.T) {
 	defer conn.Close()
 
 	// Test SET command
-	setCmd := Command{Op: "set", Key: "integration_key", Value: "integration_value"}
+	setCmd := Command{Op: "set", Key: "integration_key", Value: "integration_value", TTL: 60}
 	setCmdJSON, _ := json.Marshal(setCmd)
 
 	_, err = conn.Write(append(setCmdJSON, '\n'))
