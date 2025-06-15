@@ -31,6 +31,43 @@ func TestJStore_Execute_Set(t *testing.T) {
 	}
 }
 
+func TestJStore_Execute_Delete(t *testing.T) {
+	js := NewJStore()
+
+	cmd := Command{
+		Op:    "set",
+		Key:   "test_key",
+		Value: "test_value",
+	}
+
+	response := js.Execute(cmd)
+
+	if response.Status != "success" {
+		t.Errorf("Expected status 'success', got '%s'", response.Status)
+	}
+
+	// Verify the value was actually set
+	if js.Data["test_key"] != "test_value" {
+		t.Errorf("Expected value 'test_value', got '%s'", js.Data["test_key"])
+	}
+
+	cmd = Command{
+		Op:  "delete",
+		Key: "test_key",
+	}
+
+	response = js.Execute(cmd)
+
+	if response.Status != "success" {
+		t.Errorf("Expected status 'success', got '%s'", response.Status)
+	}
+
+	// Verify the value was deleted
+	if _, exists := js.Data["test_key"]; exists {
+		t.Errorf("Expected key 'test_key' to be deleted, but it still exists")
+	}
+}
+
 func TestJStore_Execute_Get_ExistingKey(t *testing.T) {
 	js := NewJStore()
 	js.Data["existing_key"] = "existing_value"
@@ -74,7 +111,7 @@ func TestJStore_Execute_UnknownOperation(t *testing.T) {
 	js := NewJStore()
 
 	cmd := Command{
-		Op:  "delete",
+		Op:  "move",
 		Key: "some_key",
 	}
 
