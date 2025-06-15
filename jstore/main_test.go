@@ -118,7 +118,7 @@ func TestJStore_ConcurrentAccess(t *testing.T) {
 	var wg sync.WaitGroup
 
 	// Test concurrent writes
-	for i := 0; i < 100; i++ {
+	for i := range 100 {
 		wg.Add(1)
 		go func(i int) {
 			defer wg.Done()
@@ -132,7 +132,7 @@ func TestJStore_ConcurrentAccess(t *testing.T) {
 	}
 
 	// Test concurrent reads
-	for i := 0; i < 50; i++ {
+	for range 50 {
 		wg.Add(1)
 		go func() {
 			defer wg.Done()
