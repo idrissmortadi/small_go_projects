@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"log"
+	"fmt"
 	"net"
 	"strconv"
 	"time"
@@ -11,28 +11,28 @@ import (
 const timeout = 2 * time.Second
 
 func main() {
-	log.Println("Starting CLI Port Scanner...")
+	fmt.Println("Starting CLI Port Scanner...")
 
 	// Get flag values
 	host := flag.String("host", "0.0.0.0", "Host to scan")
 	startPort := flag.Int("start", 1, "Starting port for scanning")
 	endPort := flag.Int("end", 1, "End port for scanning")
-
-	if *endPort-*startPort < 0 {
-		log.Fatal("End port must be greater or equal than start port")
-	}
-
 	flag.Parse()
 
-	log.Printf("Scanning %s from port %d to %d\n", *host, *startPort, *endPort)
+	if *endPort < *startPort {
+		fmt.Println("End port must be greater or equal than start port")
+		return
+	}
 
-	for i := range *endPort - *startPort {
-		port := *startPort + i
+	fmt.Printf("Scanning %s from port %d to %d\n", *host, *startPort, *endPort)
+
+	for port := *startPort; port <= *endPort; port++ {
 		address := *host + ":" + strconv.Itoa(port)
 		conn, err := net.DialTimeout("tcp", address, timeout)
-		if err == nil {
-			log.Printf("Port %d open\n", port)
+		if err != nil {
+			continue
 		}
 		conn.Close()
+		fmt.Printf("\tPort %d open\n", port)
 	}
 }
