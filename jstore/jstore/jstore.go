@@ -44,11 +44,10 @@ type Response struct {
 func (js *JStore) Execute(cmd Command) Response {
 	switch strings.ToLower(cmd.Op) {
 	case "set":
-		js.mu.Lock()
 		if cmd.TTL < 0 {
-			js.mu.Unlock()
 			return Response{Status: "error", Value: "ttl must be greater than or equal to 0"}
 		}
+		js.mu.Lock()
 		// Set to default TTL if not specified
 		if cmd.TTL == 0 {
 			cmd.TTL = DEFAULT_TTL
@@ -62,6 +61,14 @@ func (js *JStore) Execute(cmd Command) Response {
 	case "get":
 		js.mu.RLock()
 		data, exists := js.Data[cmd.Key]
+		// inside case "get"
+		now := time.Now().Unix()
+		if data.ExpiresAt > 0 && data.ExpiresAt < now {
+			js.mu.Lock()
+			delete(js.Data, cmd.Key)
+			js.mu.Unlock()
+			return Response{Status: "error", Value: "key not found"}
+		}
 		js.mu.RUnlock()
 		if !exists {
 			return Response{Status: "error", Value: "key not found"}
@@ -114,7 +121,7 @@ func (js *JStore) handleConnection(conn net.Conn) {
 			jsonResponse, err := json.Marshal(response)
 			if err != nil {
 				log.Println("Error marshalling error response:", err)
-				return
+				fmt.Fprintln(conn, "{\"status\":\"error\",\"value\":\"internal error\"}")
 			}
 			fmt.Fprintln(conn, string(jsonResponse))
 			continue // to next command
