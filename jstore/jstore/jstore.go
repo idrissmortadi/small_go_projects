@@ -48,6 +48,19 @@ func (js *JStore) Execute(cmd Command) Response {
 		} else {
 			return Response{Status: "error", Value: "key not found"}
 		}
+	case "delete":
+		js.mu.Lock()
+		deleted, exists := js.Data[cmd.Key]
+		if exists {
+			delete(js.Data, cmd.Key)
+			response := Response{Status: "success"}
+			response.Value = deleted
+			js.mu.Unlock()
+			return response
+		} else {
+			js.mu.Unlock()
+			return Response{Status: "error", Value: "key not found"}
+		}
 	default:
 		return Response{Status: "error", Value: "unknown operation"}
 	}
