@@ -1,0 +1,861 @@
+## Generated with Amalgo at: 2025-05-09 19:07:35
+
+## File Tree
+
+└── proxy-go/
+    ├── LICENSE
+    ├── README.md
+    ├── config.yaml
+    ├── go.mod
+    ├── go.sum
+    ├── main.go
+    ├── proxy-go
+    ├── roadmap.md
+    ├── proxy/
+    │   ├── proxy.go
+    │   ├── proxy_e2e_test.go
+    │   ├── proxy_test.go
+    │   └── testutils.go
+    └── testserver/
+        ├── main.go
+        └── server/
+            └── server.go
+
+## File Contents
+
+--- Start File: proxy-go/LICENSE
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright [yyyy] [name of copyright owner]
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+--- End File: proxy-go/LICENSE
+
+--- Start File: proxy-go/README.md
+# Proxy-Go
+
+Proxy-Go is a simple reverse proxy server written in Go, created as a learning project.
+It provides basic proxy functionality with rate limiting capabilities.
+
+## Features
+
+- **Reverse Proxy**: Forwards requests to configurable backend servers
+- **IP-based Rate Limiting**: Restricts requests based on client IP address
+- **Request Logging**: Records details of each request
+  including method, path, IP, and status
+- **Configurable**: Supports customization through configuration options
+
+## Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/proxy-go.git
+   cd proxy-go
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   go mod tidy
+   ```
+
+3. Build the project:
+
+   ```bash
+   go build -o proxy-go main.go
+   ```
+
+## Usage
+
+### Basic Configuration
+
+You can configure the proxy through a configuration file or command-line flags:
+
+```yaml
+# Example config.yaml
+target: "http://localhost:3000"
+proxy_port: 8080
+rate_limit: 60
+burst_limit: 10
+cache_size: 1000
+```
+
+### Running the Proxy
+
+```bash
+./proxy-go --config config.yaml
+```
+
+The proxy will start on the specified port and forward requests to the target
+server while applying rate limits.
+
+## Development Status
+
+This project is primarily a learning exercise for understanding Go's HTTP
+capabilities, middleware patterns, and rate limiting implementation.
+Contributions and suggestions for improvements are welcome!
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE)
+file for details.
+
+--- End File: proxy-go/README.md
+
+--- Start File: proxy-go/config.yaml
+- target: http://localhost:3000
+  proxy_port: 8080
+  rate_limit: 1
+  cache_size: 10
+  burst_limit: 3
+
+--- End File: proxy-go/config.yaml
+
+--- Start File: proxy-go/go.mod
+module github.com/idrissmortadi/proxy-go
+
+go 1.24.1
+
+require (
+	github.com/hashicorp/golang-lru v1.0.2 // indirect
+	golang.org/x/time v0.11.0 // indirect
+	gopkg.in/yaml.v3 v3.0.1 // indirect
+)
+
+--- End File: proxy-go/go.mod
+
+--- Start File: proxy-go/go.sum
+github.com/hashicorp/golang-lru v1.0.2 h1:dV3g9Z/unq5DpblPpw+Oqcv4dU/1omnb4Ok8iPY6p1c=
+github.com/hashicorp/golang-lru v1.0.2/go.mod h1:iADmTwqILo4mZ8BN3D2Q6+9jd8WM5uGBxy+E8yxSoD4=
+golang.org/x/time v0.11.0 h1:/bpjEDfN9tkoN/ryeYHnv5hcMlc8ncjMcM4XBk5NWV0=
+golang.org/x/time v0.11.0/go.mod h1:CDIdPxbZBQxdj6cxyCIdrNogrJKMJ7pr37NYpMcMDSg=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v3 v3.0.1 h1:fxVm/GzAzEWqLHuvctI91KS9hhNmmWOoWu0XTYJS7CA=
+gopkg.in/yaml.v3 v3.0.1/go.mod h1:K4uyk7z7BCEPqu6E+C64Yfv1cQ7kz7rIZviUmN+EgEM=
+
+--- End File: proxy-go/go.sum
+
+--- Start File: proxy-go/main.go
+package main
+
+import (
+	"flag"
+	"log"
+	"os"
+
+	"github.com/idrissmortadi/proxy-go/proxy"
+	"gopkg.in/yaml.v3"
+)
+
+func main() {
+	configPath := flag.String("config", "config.yaml", "Path to the YAML configuration file")
+	flag.Parse()
+
+	file, err := os.Open(*configPath)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	var config []proxy.Config
+	decoder := yaml.NewDecoder(file)
+	if err := decoder.Decode(&config); err != nil {
+		log.Fatalf("Error decoding YAML: %v", err)
+	}
+
+	proxy.ServeProxy(config)
+}
+
+--- End File: proxy-go/main.go
+
+--- Start File: proxy-go/proxy/proxy.go
+package proxy
+
+import (
+	"fmt"
+	"log"
+	"net"
+	"net/http"
+	"net/http/httputil"
+	"net/url"
+	"sync"
+	"time"
+
+	lru "github.com/hashicorp/golang-lru"
+	"golang.org/x/time/rate"
+)
+
+type Config struct {
+	Target     string `yaml:"target"`
+	ProxyPort  int    `yaml:"proxy_port"`
+	RateLimit  int    `yaml:"rate_limit"`
+	BurstLimit int    `yaml:"burst_limit"`
+	CacheSize  int    `yaml:"cache_size"`
+}
+
+type RateLimiter struct {
+	limitersCache *lru.Cache
+	mu            sync.Mutex
+	config        Config
+}
+
+func NewRateLimiter(config Config) *RateLimiter {
+	limitersLRU, err := lru.New(config.CacheSize)
+	if err != nil {
+		panic(err)
+	}
+	return &RateLimiter{
+		limitersCache: limitersLRU,
+		config:        config,
+	}
+}
+
+func (rl *RateLimiter) GetLimiter(clientIP string) *rate.Limiter {
+	rl.mu.Lock()
+	defer rl.mu.Unlock()
+
+	// Check if a limiter exists for the client IP
+	if rl.limitersCache.Contains(clientIP) {
+		limiter, _ := rl.limitersCache.Get(clientIP)
+		return limiter.(*rate.Limiter)
+	}
+
+	// Create a new limiter if none exists
+	limiter := rate.NewLimiter(rate.Limit(rl.config.RateLimit), rl.config.BurstLimit)
+	rl.limitersCache.Add(clientIP, limiter) // Add the new limiter to the cache
+	return limiter
+}
+
+func limitMiddleware(next http.Handler, rateLimiter *RateLimiter) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		clientIP, _, _ := net.SplitHostPort(r.RemoteAddr) // Extract client IP
+
+		// Get the rate limiter for the client IP
+		limiter := rateLimiter.GetLimiter(clientIP)
+
+		// Check if the request is allowed
+		if !limiter.Allow() {
+			w.WriteHeader(http.StatusTooManyRequests) // Respond with 429 Too Many Requests
+			w.Write([]byte("Too Many Requests\n"))    // Optional: Add a message body
+			return
+		}
+
+		// Pass the request to the next handler
+		next.ServeHTTP(w, r)
+	})
+}
+
+// logMiddleware is a middleware function that wraps an http.Handler.
+// It logs details about each request, including the client IP, HTTP method, URL, status code, and response time.
+func logMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		start := time.Now()      // Record the start time of the request
+		clientIP := r.RemoteAddr // Get the client's IP address
+		method := r.Method       // Get the HTTP method (e.g., GET, POST)
+		url := r.URL.String()    // Get the requested URL
+
+		// Use a custom ResponseWriter to capture the status code
+		lrw := &loggingResponseWriter{ResponseWriter: w, statusCode: http.StatusOK}
+		next.ServeHTTP(lrw, r) // Pass the request to the next handler in the chain
+
+		// Log the request details
+		log.Printf("[%s] %s %s %s %d %s", start.Format(time.RFC3339), clientIP, method, url, lrw.statusCode, time.Since(start))
+	})
+}
+
+// loggingResponseWriter is a custom implementation of http.ResponseWriter.
+// It captures the HTTP status code for logging purposes.
+type loggingResponseWriter struct {
+	http.ResponseWriter     // Embeds the original ResponseWriter
+	statusCode          int // Stores the HTTP status code
+}
+
+// WriteHeader overrides the WriteHeader method of http.ResponseWriter.
+// It captures the status code and then calls the original WriteHeader method.
+func (lrw *loggingResponseWriter) WriteHeader(code int) {
+	lrw.statusCode = code                // Store the status code
+	lrw.ResponseWriter.WriteHeader(code) // Call the original WriteHeader
+}
+
+// ServeProxy sets up and starts the reverse proxy server.
+// It forwards requests to the specified target and logs each request using the middleware.
+func ServeProxy(config []Config) {
+	target := config[0].Target // Get the target URL from the config
+	proxyPort := config[0].ProxyPort
+
+	rateLimiter := NewRateLimiter(config[0]) // Create a new rate limiter instance
+
+	// Parse the target URL
+	targetURL, err := url.Parse(target)
+	if err != nil {
+		log.Fatalf("Error parsing target host: %v", err)
+	}
+
+	// Create a reverse proxy for the target URL
+	proxy := httputil.NewSingleHostReverseProxy(targetURL)
+
+	// Wrap the proxy handler with the logging middleware
+	handler := limitMiddleware(logMiddleware(proxy), rateLimiter)
+
+	// Register the handler for the root path
+	http.Handle("/", handler)
+
+	// Log the server startup details
+	log.Printf("Proxy server running on http://localhost:%d, forwarding to %s\n", proxyPort, target)
+
+	// Start the HTTP server
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%d", proxyPort), nil))
+}
+
+--- End File: proxy-go/proxy/proxy.go
+
+--- Start File: proxy-go/proxy/proxy_e2e_test.go
+package proxy
+
+import (
+	"net/http"
+	"net/http/httptest"
+	"net/http/httputil"
+	"net/url"
+	"testing"
+	"time"
+)
+
+func startTestProxyServer() *httptest.Server {
+	// Create a dummy target server to forward requests to
+	target := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	}))
+
+	// Create the proxy server
+
+	targetURL, err := url.Parse(target.URL)
+	if err != nil {
+		panic(err)
+	}
+	config := Config{
+		Target:     "http://localhost:8080",
+		ProxyPort:  8081,
+		RateLimit:  1,
+		BurstLimit: 1,
+		CacheSize:  2,
+	}
+	rateLimiter := NewRateLimiter(config)
+	proxy := httputil.NewSingleHostReverseProxy(targetURL)
+
+	// Wrap the proxy with middlewares
+	handler := limitMiddleware(logMiddleware(proxy), rateLimiter)
+
+	// Start the test server
+	return httptest.NewServer(handler)
+}
+
+func TestRateLimiterLRUE2E(t *testing.T) {
+	server := startTestProxyServer()
+	defer server.Close()
+
+	client := &http.Client{}
+
+	// Simulate requests from different IPs
+	ips := []string{"192.168.1.1", "192.168.1.2", "192.168.1.3"}
+	for _, ip := range ips {
+		req, _ := http.NewRequest("GET", server.URL, nil)
+		req.Header.Set("X-Forwarded-For", ip)
+
+		resp, err := client.Do(req)
+		if err != nil {
+			t.Fatalf("Request failed for IP %s: %v", ip, err)
+		}
+		resp.Body.Close()
+
+		if resp.StatusCode != http.StatusOK {
+			t.Errorf("Expected 200 OK for IP %s, got %d", ip, resp.StatusCode)
+		}
+		time.Sleep(1000 * time.Millisecond)
+	}
+
+	// Send another request from the first IP to ensure it's still allowed
+	req, _ := http.NewRequest("GET", server.URL, nil)
+	req.Header.Set("X-Forwarded-For", "192.168.1.1")
+
+	resp, err := client.Do(req)
+	if err != nil {
+		t.Fatalf("Request failed for IP 192.168.1.1: %v", err)
+	}
+	resp.Body.Close()
+
+	if resp.StatusCode != http.StatusOK {
+		t.Errorf("Expected 200 OK for IP 192.168.1.1, got %d", resp.StatusCode)
+	}
+
+	// Verify eviction: the second IP should now be evicted
+	req, _ = http.NewRequest("GET", server.URL, nil)
+	req.Header.Set("X-Forwarded-For", "192.168.1.2")
+
+	resp, err = client.Do(req)
+	if err != nil {
+		t.Fatalf("Request failed for IP 192.168.1.2: %v", err)
+	}
+	resp.Body.Close()
+
+	if resp.StatusCode == http.StatusOK {
+		t.Error("Expected rate limiter to block IP 192.168.1.2 after eviction")
+	}
+}
+
+--- End File: proxy-go/proxy/proxy_e2e_test.go
+
+--- Start File: proxy-go/proxy/proxy_test.go
+package proxy
+
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
+	"time"
+)
+
+func TestLimitMiddleware(t *testing.T) {
+	testHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	})
+
+	config := setupTestConfig()
+	rateLimiter := NewRateLimiter(config)
+	handler := limitMiddleware(testHandler, rateLimiter)
+	server := httptest.NewServer(handler)
+	defer server.Close()
+
+	client := &http.Client{}
+	for i := range 5 {
+		req, _ := http.NewRequest("GET", server.URL, nil)
+		req.RemoteAddr = "127.0.0.1:12345" // Simulate client IP
+
+		resp, err := client.Do(req)
+		if err != nil {
+			t.Fatalf("Request failed: %v", err)
+		}
+		defer resp.Body.Close()
+
+		if i == 0 {
+			// First request should be allowed
+			if resp.StatusCode != http.StatusOK {
+				t.Errorf("Expected status 200, got %d\n", resp.StatusCode)
+			}
+		} else {
+			// Subsequent requests should be rate-limited
+			if resp.StatusCode != http.StatusTooManyRequests {
+				t.Errorf("Expected status 429, got %d\n", resp.StatusCode)
+			}
+		}
+
+		// Wait a short time
+		time.Sleep(100 * time.Millisecond)
+	}
+}
+
+--- End File: proxy-go/proxy/proxy_test.go
+
+--- Start File: proxy-go/proxy/testutils.go
+package proxy
+
+func setupTestConfig() Config {
+	return Config{
+		Target:     "http://localhost:8080",
+		ProxyPort:  8081,
+		RateLimit:  1,
+		BurstLimit: 1,
+		CacheSize:  2,
+	}
+}
+
+--- End File: proxy-go/proxy/testutils.go
+
+
+--- File: proxy-go/proxy-go
+<binary file>
+--- Start File: proxy-go/roadmap.md
+# Roadmap for Go Reverse Proxy with Rate Limiting
+
+## **1. Requirements Definition**
+
+### Core Features
+
+- Reverse proxy to one or more backend servers
+- IP-based rate limiting (e.g. 10 requests per minute)
+- Logs requests (method, path, IP, status)
+- Configurable backend via CLI flag or config file
+
+---
+
+## **2. Project Structure**
+
+```
+/proxy-go
+├── main.go           # Entry point
+├── config.json       # Optional config for backend target, rate limits
+└── go.mod
+```
+
+---
+
+## **3. Basic Reverse Proxy**
+
+### 3.1 Set up `main.go`
+
+- Parse config or flags (`flag` package)
+  - `--target` for backend (e.g. `http://localhost:3000`)
+  - `--port` for proxy (default: 8080)
+
+### 3.2 Implement reverse proxy
+
+- Use `httputil.NewSingleHostReverseProxy`
+- Replace the `Director` if needed (e.g. to modify headers)
+
+### 3.3 Serve requests
+
+- Use `http.ListenAndServe`
+
+---
+
+## **4. Add Logging Middleware**
+
+### Log
+
+- Client IP
+- Method and URL
+- Status code
+- Timestamp
+
+Wrap the proxy handler with a middleware that logs using `log.Printf`.
+
+---
+
+## **5. Implement IP Rate Limiting**
+
+### 5.1 Choose method
+
+- Use `golang.org/x/time/rate` (token bucket)
+
+### 5.2 Maintain a map
+
+```go
+map[string]*rate.Limiter // IP → limiter
+```
+
+### 5.3 Middleware logic
+
+- Extract IP from `http.Request`
+- Lookup or create limiter
+- If limiter rejects, respond `429 Too Many Requests`
+
+Add eviction logic or use an LRU cache (`golang/groupcache/lru`) to prevent memory bloat.
+
+---
+
+## **6. Optional: Config File Support**
+
+- JSON or YAML (use `encoding/json` or `gopkg.in/yaml.v2`)
+- Load config at startup:
+
+  ```json
+  {
+    "target": "http://localhost:3000",
+    "port": 8080,
+    "rate_limit": {
+      "requests_per_minute": 60
+    }
+  }
+  ```
+
+---
+
+## **7. Final Testing and Polish**
+
+- Test with real backend (e.g. a local HTTP server)
+- Test rate limit (curl loop)
+- Test with multiple IPs (use `curl --header` spoofing)
+- Print startup info (port, target, limits)
+- Handle errors gracefully
+
+---
+
+## **8. Possible Extensions**
+
+- Per-route rate limits
+- Burst control (e.g. allow 5 reqs instantly, then limit)
+- Dashboard with metrics (expose `/metrics`)
+- TLS support
+- Auth token limiting (instead of IP)
+
+--- End File: proxy-go/roadmap.md
+
+--- Start File: proxy-go/testserver/main.go
+package main
+
+import "github.com/idrissmortadi/proxy-go/testserver/server"
+
+func main() {
+	server.StartServer()
+}
+
+--- End File: proxy-go/testserver/main.go
+
+--- Start File: proxy-go/testserver/server/server.go
+package server
+
+import (
+	"fmt"
+	"io"
+	"log"
+	"net/http"
+	"time"
+)
+
+func handler(w http.ResponseWriter, r *http.Request) {
+	fmt.Printf("[TEST SERVER] %s %s from %s\n", r.Method, r.URL.Path, r.RemoteAddr)
+
+	// Log headers
+	for name, values := range r.Header {
+		for _, value := range values {
+			fmt.Printf("  %s: %s\n", name, value)
+		}
+	}
+
+	// Log body (if present)
+	body, _ := io.ReadAll(r.Body)
+	defer r.Body.Close()
+	if len(body) > 0 {
+		fmt.Printf("  Body: %s\n", string(body))
+	}
+
+	w.Header().Set("X-Test-Server", "true")
+	fmt.Fprint(w, "Hello from test server!\n")
+}
+
+func slowHandler(w http.ResponseWriter, r *http.Request) {
+	time.Sleep(2 * time.Second)
+	fmt.Fprint(w, "Delayed response from test server")
+}
+
+func errorHandler(w http.ResponseWriter, r *http.Request) {
+	http.Error(w, "Test server error", http.StatusInternalServerError)
+}
+
+func StartServer() {
+	http.HandleFunc("/", handler)
+	http.HandleFunc("/slow", slowHandler)
+	http.HandleFunc("/error", errorHandler)
+
+	addr := ":3000"
+	log.Printf("Test server running on http://localhost%s\n", addr)
+	if err := http.ListenAndServe(addr, nil); err != nil {
+		log.Fatalf("Test server failed: %v", err)
+	}
+}
+
+--- End File: proxy-go/testserver/server/server.go
