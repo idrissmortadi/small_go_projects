@@ -16,7 +16,7 @@ A simple, lightweight TCP-based key-value store written in Go with JSON command 
 ### Installation
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/idrissmortadi/small_go_projects.git
 cd jstore
 go mod init jstore
 go run main.go
