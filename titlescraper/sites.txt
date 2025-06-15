@@ -1,0 +1,13 @@
+https://golang.org
+https://example.com
+https://httpbin.org/html
+https://news.ycombinator.com
+https://www.wikipedia.org
+https://xkcd.com
+https://www.reddit.com
+https://www.bbc.com
+https://www.nytimes.com
+https://www.stackoverflow.com
+https://expired.badssl.com
+https://httpstat.us/200?sleep=5000
+https://httpstat.us/500

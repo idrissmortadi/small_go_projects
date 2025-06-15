@@ -1,0 +1,12 @@
+https://xkcd.com, xkcd: Alert Sound
+https://www.wikipedia.org, Wikipedia
+https://expired.badssl.com, 
+https://www.bbc.com, BBC Home - Breaking News, World News, US News, Sports, Business, Innovation, Climate, Culture, Travel, Video &amp; Audio
+https://www.nytimes.com, 
+https://golang.org, The Go Programming Language
+https://www.stackoverflow.com, Newest Questions - Stack Overflow
+https://news.ycombinator.com, Hacker News
+https://httpstat.us/500, 
+https://example.com, Example Domain
+https://www.reddit.com, Reddit - The heart of the internet
+https://httpstat.us/200?sleep=5000, 
