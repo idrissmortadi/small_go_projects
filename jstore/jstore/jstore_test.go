@@ -1,4 +1,4 @@
-package main
+package jstore
 
 import (
 	"bufio"
